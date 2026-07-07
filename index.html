@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Compete. Track. Win. — Build a Workout Habit With Friends</title>
-<meta name="description" content="Build a consistent workout habit with friends who keep you accountable. Track wearable-verified activity (Apple Watch, Garmin, Whoop, Coros), share workouts in a team feed, check your readiness, and stay consistent together." />
-<meta property="og:title" content="Compete. Track. Win. — Build a Workout Habit With Friends" />
-<meta property="og:description" content="Verified activity tracking, a team feed, readiness, and friendly fitness challenges that keep each other accountable. Coming soon to the App Store." />
+<title>Compete. Track. Win. — Verified Fitness Competition With Friends</title>
+<meta name="description" content="Take on one or take on everyone. Head-to-head Call Outs and group challenges — with verified workout tracking, streaks, and an AI coach. Workouts sync automatically via Apple Health." />
+<meta property="og:title" content="Compete. Track. Win. — Verified Fitness Competition With Friends" />
+<meta property="og:description" content="Head-to-head Call Outs, live leaderboards, and streaks — every workout verified by your wearable, or compete on Daily Steps from your phone. No money, just bragging rights." />
 <meta property="og:type" content="website" />
 <style>
   :root{
@@ -15,7 +15,7 @@
     --maxw:1080px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;scroll-padding-top:76px}
   body{
     background:var(--bg);color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -27,6 +27,9 @@
     color:var(--volt);font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
   }
   .muted{color:var(--muted)}
+  /* typography: prevent orphans/widows where supported */
+  h1,h2,h3{text-wrap:balance}
+  p,li{text-wrap:pretty}
 
   /* nav */
   header{position:sticky;top:0;z-index:20;background:rgba(22,24,28,.82);backdrop-filter:blur(12px);
@@ -49,8 +52,8 @@
   /* hero */
   .hero{padding:84px 0 64px;text-align:center;position:relative;overflow:hidden}
   .hero .shield{width:96px;height:96px;margin:0 auto 26px;display:block;filter:drop-shadow(0 12px 40px rgba(198,255,46,.18))}
-  .hero h1{font-size:clamp(36px,6vw,64px);line-height:1.04;letter-spacing:-.02em;font-weight:700;margin:18px auto 0;max-width:14ch}
-  .hero h1 .v{color:var(--volt)}
+  .hero h1{font-size:clamp(36px,6vw,64px);line-height:1.04;letter-spacing:-.02em;font-weight:700;margin:18px auto 0;text-wrap:balance}
+  .hero h1 .v{color:var(--volt);display:block}
   .hero p.sub{font-size:clamp(16px,2.2vw,20px);color:var(--muted);max-width:60ch;margin:22px auto 0}
   .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
   .cta-row .btn{padding:14px 26px;font-size:15px}
@@ -84,7 +87,7 @@
   /* money statement */
   .money{background:var(--surface);border:1px solid var(--hairline);border-radius:22px;padding:48px 40px;text-align:center}
   .money .eyebrow{color:var(--volt)}
-  .money h2{font-size:clamp(24px,3.2vw,34px);margin:14px auto 16px;max-width:18ch;letter-spacing:-.015em}
+  .money h2{font-size:clamp(24px,3.2vw,34px);margin:14px auto 16px;max-width:30ch;letter-spacing:-.015em}
   .money p{color:var(--muted);max-width:64ch;margin:0 auto;font-size:16px}
 
   /* pricing */
@@ -103,6 +106,12 @@
     mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/contain no-repeat}
   .price .note{color:var(--muted);font-size:12.5px;margin-top:20px}
   @media(max-width:680px){.prices{grid-template-columns:1fr}}
+
+  /* faq */
+  .faq{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+  .qa{background:var(--surface);border:1px solid var(--hairline);border-radius:16px;padding:22px 24px}
+  .qa h3{font-size:16px;font-weight:600;margin-bottom:8px}
+  .qa p{color:var(--muted);font-size:14.5px}
 
   /* final cta */
   .final{text-align:center;padding:84px 0}
@@ -143,7 +152,8 @@
         <a class="lnk" href="#how">How it works</a>
         <a class="lnk" href="#features">Features</a>
         <a class="lnk" href="#pricing">Pricing</a>
-        <a class="btn" href="mailto:leadership@compete-track-win.com?subject=Early%20access%20—%20Compete.%20Track.%20Win.">Get early access</a>
+        <a class="lnk" href="#faq">FAQ</a>
+        <a class="btn" href="https://apps.apple.com/app/id6759311183">Download</a>
       </div>
     </nav>
   </div>
@@ -155,21 +165,22 @@
   <section class="hero">
     <div class="wrap">
       <svg class="shield" viewBox="0 0 1024 1024"><use href="#shield"/></svg>
-      <div class="eyebrow">Coming soon to the App Store</div>
-      <h1>Build a workout habit <span class="v">with friends who keep you honest.</span></h1>
-      <p class="sub">Track your verified activity, share workouts with your team, and turn fitness into friendly challenges that keep each other accountable. Every workout is verified by your Apple Watch, Garmin, Whoop, or Coros — real effort, scored fairly.</p>
+      <div class="eyebrow">Verified fitness competition</div>
+      <h1>Take on one. <span class="v">Take on everyone.</span></h1>
+      <p class="sub">Head-to-head Call Outs and group challenges — powered by verified workout tracking, streaks, and an AI coach on every session.</p>
       <div class="cta-row">
-        <a class="btn" href="mailto:leadership@compete-track-win.com?subject=Early%20access%20—%20Compete.%20Track.%20Win.">Get early access</a>
+        <a class="btn" href="https://apps.apple.com/app/id6759311183">Download on the App Store</a>
         <a class="btn ghost" href="#how">See how it works</a>
       </div>
       <div class="activities">
-        <span class="chip">🏃 Running</span>
-        <span class="chip">🚴 Cycling</span>
-        <span class="chip">🏊 Swimming</span>
-        <span class="chip">🏋️ Strength</span>
-        <span class="chip">🥾 Hiking</span>
-        <span class="chip">🤸 HIIT</span>
-        <span class="chip">🚣 Rowing</span>
+        <span class="chip">Running</span>
+        <span class="chip">Cycling</span>
+        <span class="chip">Swimming</span>
+        <span class="chip">Strength</span>
+        <span class="chip">Hiking</span>
+        <span class="chip">HIIT</span>
+        <span class="chip">Rowing</span>
+        <span class="chip">Daily Steps</span>
       </div>
     </div>
   </section>
@@ -185,17 +196,17 @@
         <div class="step">
           <div class="num">1</div>
           <h3>Work out — we verify it</h3>
-          <p>Your workouts sync automatically from Apple Watch, Garmin, Whoop, Coros, or Fitbit via Apple Health. Real, verified effort — earn 1 point per active minute.</p>
+          <p>Your workouts sync automatically via Apple Health — real, verified effort, earning 1 point per active minute. No wearable? Compete on Daily Steps, straight from your phone.</p>
         </div>
         <div class="step">
           <div class="num">2</div>
-          <h3>Bring your team</h3>
-          <p>Follow your teammates' workouts in a shared feed, cheer each other on, and start a group challenge or a one-tap head-to-head Call Out.</p>
+          <h3>Call out a friend</h3>
+          <p>Send a one-tap head-to-head Call Out, or start a group challenge. Follow your teammates in a shared feed and cheer each other on.</p>
         </div>
         <div class="step">
           <div class="num">3</div>
-          <h3>Stay accountable</h3>
-          <p>Climb a live leaderboard, keep your streak alive, and check your readiness so you train smart. Add an optional non-money Challenge Note — bragging rights or who picks the next workout.</p>
+          <h3>Climb the leaderboard</h3>
+          <p>Watch a live leaderboard settle it, keep your streak alive, and check your daily readiness so you train smart. Add an optional non-money Challenge Note — bragging rights or who picks the next workout.</p>
         </div>
       </div>
     </div>
@@ -213,7 +224,7 @@
         <div class="feat">
           <div class="ic">✓</div>
           <h3>Verified activity</h3>
-          <p>Workouts from Apple Watch, Garmin, Whoop, Coros, or Fitbit are verified and scored on our servers — no manual entries, no cheating. Earned, not typed.</p>
+          <p>Workouts sync automatically through Apple Health, then are verified and scored on our servers — no manual entries, no cheating. Earned, not typed.</p>
         </div>
         <div class="feat">
           <div class="ic">⚡</div>
@@ -221,9 +232,9 @@
           <p>1 point per verified active minute — an honest hour counts the same across any activity. Keep your streak alive and watch the trend climb.</p>
         </div>
         <div class="feat">
-          <div class="ic">👥</div>
-          <h3>Team feed</h3>
-          <p>A Strava-style feed of you and your teammates' workouts, with fist bumps and comments to cheer each other on.</p>
+          <div class="ic">👟</div>
+          <h3>Daily Steps</h3>
+          <p>No wearable required. Hit a daily step goal from your phone and compete right alongside everyone else — anyone can play.</p>
         </div>
         <div class="feat">
           <div class="ic">🏁</div>
@@ -231,14 +242,14 @@
           <p>Start a group challenge or call out a rival one-on-one. Live leaderboards and a transparent, auditable scorecard for everyone.</p>
         </div>
         <div class="feat">
-          <div class="ic">🔥</div>
-          <h3>Readiness &amp; Training Load <span class="pro">PRO</span></h3>
-          <p>A daily recovery score from your HRV, resting heart rate, sleep, and load — so you train smart and avoid burnout.</p>
+          <div class="ic">✦</div>
+          <h3>Your AI coach</h3>
+          <p>A short Coach's Read after every workout, an ongoing focus tied to your goal, and a daily readiness cue that says when to push or ease off. Coaching that actually reads your training — deeper history and insights are Pro.</p>
         </div>
         <div class="feat">
-          <div class="ic">🤝</div>
-          <h3>Friendly accountability</h3>
-          <p>An optional non-money Challenge Note keeps it fun — bragging rights or who picks the next workout. Just for fun.</p>
+          <div class="ic">👥</div>
+          <h3>Team feed</h3>
+          <p>A live feed of you and your teammates' workouts, with fist bumps and comments to cheer each other on.</p>
         </div>
       </div>
     </div>
@@ -250,7 +261,7 @@
       <div class="money">
         <div class="eyebrow">Why it&#x27;s different</div>
         <h2>Verified, not self-reported.</h2>
-        <p>Every workout is recorded by your Apple Watch, Garmin, Whoop, Coros, or Fitbit and scored on our servers — no manual entries, no inflated logs. When you climb the leaderboard, you earned it.</p>
+        <p>Every workout syncs through Apple Health and is scored on our servers — no manual entries, no inflated logs. When you climb the leaderboard, you earned it.</p>
       </div>
     </div>
   </section>
@@ -272,7 +283,7 @@
             <li>Groups up to 10</li>
             <li>Effort points, streaks &amp; readiness</li>
             <li>Team feed, leaderboards &amp; Call Outs</li>
-            <li>Wearable-verified scoring</li>
+            <li>Wearable- or step-verified scoring</li>
           </ul>
         </div>
         <div class="price pro">
@@ -283,8 +294,8 @@
           <ul>
             <li>More concurrent challenges</li>
             <li>Groups up to 50</li>
-            <li>Longer Training Load, Readiness &amp; effort history</li>
-            <li>The full Records wall</li>
+            <li>Longer Training Load &amp; Readiness history</li>
+            <li>Your full workout history</li>
             <li>The Pro badge</li>
           </ul>
           <div class="note">Subscription billed through Apple. Auto-renews; cancel anytime in Settings.</div>
@@ -293,12 +304,40 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="band" id="faq">
+    <div class="wrap">
+      <div class="sechead">
+        <div class="eyebrow">FAQ</div>
+        <h2>Good questions</h2>
+      </div>
+      <div class="faq">
+        <div class="qa">
+          <h3>Is this a betting app?</h3>
+          <p>No. There's no money, ever — no entry fees, no cash prizes, no payouts. Just verified workouts, live leaderboards, and bragging rights.</p>
+        </div>
+        <div class="qa">
+          <h3>Do I need a wearable?</h3>
+          <p>No. If your workouts land in Apple Health — from a watch or any connected device — they sync automatically. And if you don't have a wearable, you can compete on Daily Steps straight from your phone.</p>
+        </div>
+        <div class="qa">
+          <h3>Is it free?</h3>
+          <p>Yes. The full loop — Call Outs, challenges, leaderboards, streaks, and the team feed — is free. Pro ($7.99/mo, or $39.99/yr with a 7-day trial) adds deeper history and coaching.</p>
+        </div>
+        <div class="qa">
+          <h3>How do you stop cheating?</h3>
+          <p>Every workout is recorded by your wearable and scored on our servers — no manual entries, no typed-in numbers. Earned, not typed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FINAL CTA -->
   <section class="final">
     <div class="wrap">
-      <h2>Be first on the <span class="v">leaderboard.</span></h2>
-      <p>Get early access and we'll let you know the moment Compete. Track. Win. hits the App Store.</p>
-      <a class="btn" href="mailto:leadership@compete-track-win.com?subject=Early%20access%20—%20Compete.%20Track.%20Win.">Get early access</a>
+      <h2>Settle it on the <span class="v">leaderboard.</span></h2>
+      <p>Download Compete. Track. Win. and call out your first rival.</p>
+      <a class="btn" href="https://apps.apple.com/app/id6759311183">Download on the App Store</a>
     </div>
   </section>
 
