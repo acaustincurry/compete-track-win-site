@@ -9,7 +9,7 @@
   <meta property="og:description" content="Verified workouts. Winner takes it. Join the challenge on Compete. Track. Win.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://compete-track-win.com/og-callout.png">
-  <meta name="apple-itunes-app" content="app-id=PLACEHOLDER_APPLE_ID">
+  <meta name="apple-itunes-app" content="app-id=6759311183">
   <style>
     :root { --navy900:#16181C; --navy700:#1E2128; --volt:#C6FF2E; --mist:#8A9099; --text:#F4F6F7; }
     html,body{margin:0;height:100%;background:var(--navy900);color:var(--text);
@@ -33,15 +33,26 @@
     <p class="fine">Already have the app? It should open automatically. Otherwise tap above.</p>
   </div>
   <script>
-    // GitHub Pages serves this for any unmatched path. Callout deep links are /c/{CODE}; when the
-    // app is installed the Universal Link opens it directly and this never renders. For everyone
-    // else we show the join CTA; any other unknown path just goes home.
+    // GitHub Pages serves this for any unmatched path — including every real /c/{CODE} invite
+    // link (only /c/ exactly hits c/index.html). So THIS page is the actual cold-install
+    // surface: it must run the clipboard bridge, not just link out. When the app is installed
+    // the Universal Link opens it directly and this never renders. Any other unknown path goes home.
     var path = location.pathname;
-    var APP_STORE_URL = "https://apps.apple.com/app/idPLACEHOLDER_APPLE_ID"; // set once the app is live
+    var APP_STORE_URL = "https://apps.apple.com/app/id6759311183";
     if (path.indexOf("/c/") === 0) {
       var code = (path.split("/").filter(Boolean).pop() || "").toUpperCase();
       document.getElementById("code").textContent = code ? "CODE " + code : "";
-      document.getElementById("cta").href = APP_STORE_URL;
+      var cta = document.getElementById("cta");
+      cta.href = APP_STORE_URL;
+      // Deferred-deep-link bridge for COLD installs: on the tap that sends the visitor to the
+      // App Store, stash the FULL /c/{CODE} URL. The app probes with UIPasteboard.detectPatterns
+      // (.probableWebURL) to avoid the iOS paste banner — a bare code matches no detection
+      // pattern and would be silently ignored, so it must be the URL.
+      cta.addEventListener("click", function () {
+        if (code && navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(location.origin + "/c/" + code).catch(function () {});
+        }
+      });
       document.getElementById("callout").style.display = "flex";
     } else {
       location.replace("/");
