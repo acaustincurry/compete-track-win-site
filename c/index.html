@@ -53,23 +53,28 @@
     cta.href = APP_STORE_URL;
 
     // Deferred-deep-link bridge for COLD installs: Universal Links don't survive an App Store
-    // install, so on the tap that sends the visitor to the App Store we stash the code on the
-    // clipboard. On first launch the app reads it once and pre-fills the join code. Best-effort
-    // (needs the user gesture + clipboard permission); the visible code above is the guaranteed
-    // fallback, paired with the app's manual "Have an invite code?" entry.
-    function stashCode() {
+    // install, so on the tap that sends the visitor to the App Store we stash the invite on the
+    // clipboard. On first launch the app probes the clipboard with UIPasteboard.detectPatterns
+    // (.probableWebURL) so it never trips the iOS paste banner — which means the stash MUST be
+    // the FULL /c/{CODE} URL: a bare code matches no Apple detection pattern and the app will
+    // silently find nothing. Best-effort (needs the user gesture + clipboard permission); the
+    // visible code above is the guaranteed manual fallback.
+    function stashInviteURL() {
       if (code && navigator.clipboard && navigator.clipboard.writeText) {
-        return navigator.clipboard.writeText(code).catch(function () {});
+        return navigator.clipboard.writeText(location.origin + "/c/" + code).catch(function () {});
       }
     }
-    cta.addEventListener("click", stashCode);
+    cta.addEventListener("click", stashInviteURL);
 
-    // Explicit copy affordance for anyone who wants to grab the code by hand.
+    // Explicit copy affordance for anyone who wants to grab the code by hand — this one copies
+    // the BARE code (it's for typing into the app's join field, not for the URL bridge).
     if (code) {
       var copyBtn = document.getElementById("copy");
       copyBtn.hidden = false;
       copyBtn.addEventListener("click", function () {
-        stashCode();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(code).catch(function () {});
+        }
         copyBtn.textContent = "Copied";
         setTimeout(function () { copyBtn.textContent = "Copy code"; }, 1500);
       });
