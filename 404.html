@@ -3,10 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>You've been called out — Compete. Track. Win.</title>
-  <!-- Open Graph / iMessage rich preview for Callout links (/c/{code}). -->
-  <meta property="og:title" content="You've been called out 🏆">
-  <meta property="og:description" content="Verified workouts. Winner takes it. Join the challenge on Compete. Track. Win.">
+  <title>You've been challenged — Compete. Track. Win.</title>
+  <!-- Open Graph / iMessage rich preview for invite links (/c/{code}). This page serves BOTH
+       head-to-head Call Outs and group invites, so the wording stays general — don't narrow
+       it back to "called out". Keep this copy in sync with c/index.html. -->
+  <meta property="og:title" content="You've been challenged">
+  <meta property="og:description" content="A friend challenged you on Compete. Track. Win. — verified workouts settle it, no wearable needed.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://compete-track-win.com/og-callout.png">
   <meta name="apple-itunes-app" content="app-id=6759311183">
@@ -18,19 +20,25 @@
       text-align:center;padding:32px;gap:18px;}
     h1{font-size:26px;margin:0;}
     p{color:var(--mist);max-width:340px;line-height:1.5;margin:0;}
+    .mark{width:96px;height:96px;}
     .code{font-family:ui-monospace,monospace;letter-spacing:4px;font-size:20px;color:var(--volt);}
     a.cta{margin-top:8px;background:var(--volt);color:var(--navy900);font-weight:700;text-decoration:none;
       padding:15px 28px;border-radius:14px;font-size:17px;}
+    button.copy{background:transparent;border:1px solid var(--navy700);color:var(--text);
+      padding:9px 16px;border-radius:10px;font-size:14px;cursor:pointer;}
+    button.copy:active{background:var(--navy700);}
     .fine{font-size:12px;color:var(--mist);}
   </style>
 </head>
 <body>
   <div class="wrap" id="callout" style="display:none">
-    <h1>You've been called out 🏆</h1>
-    <p>A friend challenged you on <b>Compete. Track. Win.</b> — Apple-Watch-verified workouts, winner takes it.</p>
+    <img class="mark" src="https://compete-track-win.com/mark_volt.png" alt="Compete. Track. Win.">
+    <h1>You've been challenged</h1>
+    <p>A friend challenged you on <b>Compete. Track. Win.</b> — verified workouts settle it. No wearable needed; even daily steps count.</p>
     <div class="code" id="code"></div>
     <a class="cta" id="cta" href="#">Get the app &amp; join</a>
-    <p class="fine">Already have the app? It should open automatically. Otherwise tap above.</p>
+    <button class="copy" id="copy" hidden>Copy code</button>
+    <p class="fine">Already have the app? It should open automatically. New here? Install, open the app, and your invite is ready — enter the code above if it doesn't fill in.</p>
   </div>
   <script>
     // GitHub Pages serves this for any unmatched path — including every real /c/{CODE} invite
@@ -53,6 +61,19 @@
           navigator.clipboard.writeText(location.origin + "/c/" + code).catch(function () {});
         }
       });
+      // Explicit copy affordance for anyone who wants to grab the code by hand — this one
+      // copies the BARE code (for typing into the app's join field, not for the URL bridge).
+      if (code) {
+        var copyBtn = document.getElementById("copy");
+        copyBtn.hidden = false;
+        copyBtn.addEventListener("click", function () {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(code).catch(function () {});
+          }
+          copyBtn.textContent = "Copied";
+          setTimeout(function () { copyBtn.textContent = "Copy code"; }, 1500);
+        });
+      }
       document.getElementById("callout").style.display = "flex";
     } else {
       location.replace("/");
