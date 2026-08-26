@@ -4,9 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Compete. Track. Win. — Verified Fitness Competition With Friends</title>
-<meta name="description" content="Take on one or take on everyone. Head-to-head Call Outs and group challenges — with verified workout tracking, streaks, and an AI coach. Workouts sync automatically via Apple Health." />
+<meta name="description" content="Take on one or take on everyone. Head-to-head Call Outs and group challenges — with verified workout tracking, streaks, and a Coach's Read on every workout. Workouts sync automatically via Apple Health." />
+<meta name="apple-itunes-app" content="app-id=6759311183" />
 <meta property="og:title" content="Compete. Track. Win. — Verified Fitness Competition With Friends" />
-<meta property="og:description" content="Take on one or take on everyone. Head-to-head Call Outs and group challenges — with verified workout tracking, streaks, and an AI coach. Workouts sync automatically via Apple Health." />
+<meta property="og:description" content="Take on one or take on everyone. Head-to-head Call Outs and group challenges — with verified workout tracking, streaks, and a Coach's Read on every workout. Workouts sync automatically via Apple Health." />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://compete-track-win.com/og-callout.png" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -34,7 +35,8 @@
   p,li{text-wrap:pretty}
 
   /* nav */
-  header{position:sticky;top:0;z-index:20;background:rgba(22,24,28,.82);backdrop-filter:blur(12px);
+  header{position:sticky;top:0;z-index:20;background:rgba(22,24,28,.82);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
     border-bottom:1px solid var(--hairline)}
   nav{display:flex;align-items:center;justify-content:space-between;height:64px}
   .brand{display:flex;align-items:center;gap:11px;font-weight:600;letter-spacing:.04em}
@@ -44,6 +46,8 @@
   .navlinks{display:flex;align-items:center;gap:30px}
   .navlinks a{font-size:14px;color:var(--muted)}
   .navlinks a:hover{color:var(--text)}
+  /* .navlinks a (0,1,1) outranks .btn (0,1,0) — without this the volt pill gets muted grey text */
+  .navlinks .btn, .navlinks .btn:hover{color:var(--on-volt)}
   .btn{display:inline-block;background:var(--volt);color:var(--on-volt);font-weight:600;font-size:14px;
     padding:11px 20px;border-radius:11px;border:0;cursor:pointer;transition:transform .12s ease,filter .12s ease}
   .btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
@@ -58,6 +62,16 @@
   .hero h1 .v{color:var(--volt);display:block}
   .hero p.sub{font-size:clamp(16px,2.2vw,20px);color:var(--muted);max-width:60ch;margin:22px auto 0}
   .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .herofine{color:var(--muted);font-size:13.5px;margin-top:16px}
+  /* Mobile hero compaction: keeps the App Store CTA above the fold on SE-class
+     iPhones (375×667 ⇒ ~548px visible in Safari) even with the Smart App Banner. */
+  @media(max-width:680px){
+    .hero{padding:44px 0 56px}
+    .hero .shield{width:72px;height:72px;margin-bottom:16px}
+    .hero h1{margin-top:14px}
+    .hero p.sub{margin-top:16px}
+    .cta-row{margin-top:26px}
+  }
   .cta-row .btn{padding:14px 26px;font-size:15px}
   .activities{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:46px}
   .chip{background:var(--surface);border:1px solid var(--hairline);border-radius:999px;padding:7px 15px;font-size:13px;color:var(--muted)}
@@ -88,6 +102,8 @@
 
   /* money statement */
   .money{background:var(--surface);border:1px solid var(--hairline);border-radius:22px;padding:48px 40px;text-align:center}
+  /* must FOLLOW the base .money rule — same specificity, source order decides */
+  @media(max-width:560px){.money{padding:36px 22px}}
   .money .eyebrow{color:var(--volt)}
   .money h2{font-size:clamp(24px,3.2vw,34px);margin:14px auto 16px;max-width:30ch;letter-spacing:-.015em}
   .money p{color:var(--muted);max-width:64ch;margin:0 auto;font-size:16px}
@@ -125,6 +141,7 @@
   footer{border-top:1px solid var(--hairline);padding:40px 0;color:var(--muted);font-size:13.5px}
   .foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
   .foot .links{display:flex;gap:22px}
+  .foot .links a{display:inline-block;padding:10px 4px;margin:-10px -4px}
   .foot a:hover{color:var(--text)}
 </style>
 </head>
@@ -155,6 +172,7 @@
         <a class="lnk" href="#features">Features</a>
         <a class="lnk" href="#pricing">Pricing</a>
         <a class="lnk" href="#faq">FAQ</a>
+        <a class="lnk" href="/support.html">Support</a>
         <a class="btn" href="https://apps.apple.com/app/id6759311183">Download</a>
       </div>
     </nav>
@@ -169,11 +187,12 @@
       <svg class="shield" viewBox="0 0 1024 1024"><use href="#shield"/></svg>
       <div class="eyebrow">Verified fitness competition</div>
       <h1>Take on one. <span class="v">Take on everyone.</span></h1>
-      <p class="sub">Head-to-head Call Outs and group challenges — powered by verified workout tracking, streaks, and an AI coach on every workout.</p>
+      <p class="sub">Head-to-head Call Outs and group challenges — powered by verified workout tracking, streaks, and a Coach&#x27;s Read on every workout.</p>
       <div class="cta-row">
         <a class="btn" href="https://apps.apple.com/app/id6759311183">Download on the App Store</a>
         <a class="btn ghost" href="#how">See how it works</a>
       </div>
+      <p class="herofine">Free to download &middot; Every account starts with a 7-day Pro trial &middot; Requires an iPhone</p>
       <div class="activities">
         <span class="chip">Running</span>
         <span class="chip">Cycling</span>
@@ -197,18 +216,18 @@
       <div class="steps">
         <div class="step">
           <div class="num">1</div>
-          <h3>Work out — we verify it</h3>
-          <p>Your workouts sync automatically via Apple Health — real, verified effort, earning 1 point per active minute. No wearable? Compete on Daily Steps, straight from your phone.</p>
+          <h3>Download and connect</h3>
+          <p>Grab it from the App Store, sign in with Apple or Google, and connect Apple Health. That&#x27;s the whole setup. No wearable? No problem — Daily Steps scores straight from your phone.</p>
         </div>
         <div class="step">
           <div class="num">2</div>
-          <h3>Call out a friend</h3>
-          <p>Send a one-tap head-to-head Call Out, or start a group challenge. Follow your teammates in a shared feed and cheer each other on.</p>
+          <h3>Join or start a challenge</h3>
+          <p>Have an invite code? Joining friends&#x27; challenges is always free — no limits. Or start your own: a group challenge, or a one-tap head-to-head Call Out. Add an optional Challenge Note — bragging rights, or who picks the next workout.</p>
         </div>
         <div class="step">
           <div class="num">3</div>
           <h3>Climb the leaderboard</h3>
-          <p>Watch a live leaderboard settle it, keep your streak alive, and check your daily readiness so you train smart. Add an optional Challenge Note — bragging rights or who picks the next workout.</p>
+          <p>Just train like you already do. Verified workouts sync from Apple Health and score automatically — 1 point for every active minute your heart rate backs up — and the live leaderboard settles it. Keep your streak alive, and check your readiness to know when to push and when to ease off.</p>
         </div>
       </div>
     </div>
@@ -231,7 +250,7 @@
         <div class="feat">
           <div class="ic">⚡</div>
           <h3>Effort points &amp; streaks</h3>
-          <p>1 point per verified active minute — an honest hour counts the same across any activity. Keep your streak alive and watch the trend climb.</p>
+          <p>1 point for every active minute your heart rate backs up — an honest hour counts the same across any activity. Keep your streak alive and watch the trend climb.</p>
         </div>
         <div class="feat">
           <div class="ic">👟</div>
@@ -241,12 +260,12 @@
         <div class="feat">
           <div class="ic">🏁</div>
           <h3>Challenges &amp; Call Outs</h3>
-          <p>Start a group challenge or call out a rival one-on-one. Live leaderboards and a transparent, auditable scorecard for everyone.</p>
+          <p>Start a group challenge or call out a rival one-on-one — joining friends&#x27; challenges is always free. Live leaderboards, captain-set handicaps, and a day-by-day points breakdown everyone can see.</p>
         </div>
         <div class="feat">
           <div class="ic">✦</div>
           <h3>Your AI coach</h3>
-          <p>A short Coach's Read after every workout, an ongoing focus tied to your goal, and a daily readiness cue that says when to push or ease off. Coaching that actually reads your training — deeper history and insights are Pro.</p>
+          <p>A short Coach&#x27;s Read after every workout, a weekly Coach Focus tied to your goal, and a daily readiness check that says when to push or ease off. Honest coaching that reads your actual training — 90-day trends are Pro.</p>
         </div>
         <div class="feat">
           <div class="ic">👥</div>
@@ -273,7 +292,8 @@
     <div class="wrap">
       <div class="sechead">
         <div class="eyebrow">Pricing</div>
-        <h2>Free to play. Pro to dominate.</h2>
+        <h2>Free to play. Pro to go deeper.</h2>
+        <p>Every new account starts with a 7-day Pro trial — nothing to buy.</p>
       </div>
       <div class="prices">
         <div class="price">
@@ -281,11 +301,11 @@
           <div class="amt">$0</div>
           <div class="alt">Everything you need to start.</div>
           <ul>
-            <li>One active challenge at a time</li>
+            <li>Join friends&#x27; challenges — always free, unlimited</li>
+            <li>Create 1 open challenge at a time</li>
             <li>Groups up to 10</li>
             <li>Effort points, streaks &amp; readiness</li>
             <li>Team feed, leaderboards &amp; Call Outs</li>
-            <li>Wearable- or step-verified scoring</li>
           </ul>
         </div>
         <div class="price pro">
@@ -294,9 +314,10 @@
           <div class="amt">$7.99<span> / mo</span></div>
           <div class="alt">or $39.99 / yr — best value, save over 50%</div>
           <ul>
-            <li>Unlimited concurrent challenges</li>
+            <li>Create unlimited challenges</li>
             <li>Groups up to 50</li>
-            <li>Longer Training Load &amp; Readiness history</li>
+            <li>Pace splits &amp; heart-rate zones on your workouts</li>
+            <li>Coach&#x27;s Read with 90-day trends</li>
             <li>12 months of workout history</li>
             <li>The Pro badge</li>
           </ul>
@@ -320,11 +341,11 @@
         </div>
         <div class="qa">
           <h3>Is it free?</h3>
-          <p>Yes. The full loop — Call Outs, challenges, leaderboards, streaks, and the team feed — is free, and every new account starts with a 7-day Pro trial. Pro ($7.99/mo or $39.99/yr) adds deeper history and coaching.</p>
+          <p>Yes. The full loop — Call Outs, challenges, leaderboards, streaks, and the team feed — is free, and joining a friend&#x27;s challenge is always free, with no limit; the free tier only limits how many open challenges you can create (a sent Call Out counts until it&#x27;s accepted or expires). Every new account starts with a 7-day Pro trial, and Pro ($7.99/mo or $39.99/yr) adds deeper history and coaching.</p>
         </div>
         <div class="qa">
           <h3>How do you stop cheating?</h3>
-          <p>Every workout is recorded by your wearable and scored on our servers — no manual entries, no typed-in numbers. Earned, not typed.</p>
+          <p>Every workout is recorded by a device — your watch, a connected fitness app, or your phone&#x27;s step count — and scored on our servers. No manual entries, no typed-in numbers. Earned, not typed.</p>
         </div>
       </div>
     </div>
@@ -336,6 +357,7 @@
       <h2>Settle it on the <span class="v">leaderboard.</span></h2>
       <p>Download Compete. Track. Win. and call out your first rival.</p>
       <a class="btn" href="https://apps.apple.com/app/id6759311183">Download on the App Store</a>
+      <p class="herofine">Free to download &middot; New on the App Store — launched August 2026</p>
     </div>
   </section>
 

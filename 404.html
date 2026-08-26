@@ -26,8 +26,9 @@
     a.cta{margin-top:8px;background:var(--volt);color:var(--navy900);font-weight:700;text-decoration:none;
       padding:15px 28px;border-radius:14px;font-size:17px;}
     button.copy{background:transparent;border:1px solid var(--navy700);color:var(--text);
-      padding:9px 16px;border-radius:10px;font-size:14px;cursor:pointer;}
+      padding:12px 20px;border-radius:12px;font-size:15px;min-height:44px;cursor:pointer;}
     button.copy:active{background:var(--navy700);}
+    .reassure{font-size:15px;color:var(--text);}
     .fine{font-size:12px;color:var(--mist);}
   </style>
 </head>
@@ -38,8 +39,9 @@
     <p>A friend challenged you on <b>Compete. Track. Win.</b> — verified workouts settle it. No wearable needed; even daily steps count.</p>
     <div class="code" id="code"></div>
     <a class="cta" id="cta" href="#">Get the app &amp; join</a>
+    <p class="reassure">Free to join — no purchase needed &middot; Requires an iPhone</p>
     <button class="copy" id="copy" hidden>Copy code</button>
-    <p class="fine">Already have the app? It should open automatically. New here? Install, open the app, and your invite is ready — enter the code above if it doesn't fill in. Free to join — no purchase needed. Requires an iPhone (workouts verify through Apple Health).</p>
+    <p class="fine">Already have the app? It should open automatically. New here? Install, open the app, and your invite is ready — enter the code above if it doesn't fill in. Workouts verify through Apple Health.</p>
   </div>
   <script>
     // GitHub Pages serves this for any unmatched path — including every real /c/{CODE} invite
@@ -49,7 +51,11 @@
     var path = location.pathname;
     var APP_STORE_URL = "https://apps.apple.com/app/id6759311183";
     if (path.indexOf("/c/") === 0) {
-      var code = (path.split("/").filter(Boolean).pop() || "").toUpperCase();
+      // Only a segment AFTER "c" is a code — "/c/" exactly must not render "CODE C" —
+      // and only the app's real 6-char alphanumeric shape counts ("index.html" is not a code).
+      var seg = path.split("/").filter(Boolean);
+      var code = (seg.length > 1 ? seg[seg.length - 1] : "").toUpperCase();
+      if (!/^[A-Z0-9]{6}$/.test(code)) code = "";
       document.getElementById("code").textContent = code ? "CODE " + code : "";
       var cta = document.getElementById("cta");
       cta.href = APP_STORE_URL;
