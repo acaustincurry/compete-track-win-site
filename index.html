@@ -100,6 +100,17 @@
   @media(max-width:880px){.features{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:560px){.features{grid-template-columns:1fr}}
 
+  /* open challenges — the weekly opens */
+  .opens{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .opencard{background:var(--surface);border:1px solid var(--hairline);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+  .opencard .openeyebrow{color:var(--volt);font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .opencard h3{font-size:18px;font-weight:700}
+  .opencard p{color:var(--muted);font-size:14.5px;flex:1}
+  .opencard .openmeta{color:var(--text);font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  .opencard .btn{margin-top:4px}
+  .opensnote{color:var(--muted);font-size:13.5px;margin-top:18px;text-align:center;max-width:64ch;margin-left:auto;margin-right:auto}
+  @media(max-width:880px){.opens{grid-template-columns:1fr;max-width:440px;margin:0 auto}}
+
   /* money statement */
   .money{background:var(--surface);border:1px solid var(--hairline);border-radius:22px;padding:48px 40px;text-align:center}
   /* must FOLLOW the base .money rule — same specificity, source order decides */
@@ -169,6 +180,7 @@
       </a>
       <div class="navlinks">
         <a class="lnk" href="#how">How it works</a>
+        <a class="lnk" href="#open">Open Challenges</a>
         <a class="lnk" href="#features">Features</a>
         <a class="lnk" href="#pricing">Pricing</a>
         <a class="lnk" href="#faq">FAQ</a>
@@ -230,6 +242,42 @@
           <p>Just train like you already do. Verified workouts sync from Apple Health and score automatically — 1 point for every active minute your heart rate backs up — and the live leaderboard settles it. Keep your streak alive, and check your readiness to know when to push and when to ease off.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- OPEN CHALLENGES — THE WEEKLY OPENS. Weekly rotation: edit the three cards' code hrefs +
+       the start date (data lives inline; automation of this rotation is on the roadmap). -->
+  <section class="band" id="open">
+    <div class="wrap">
+      <div class="sechead">
+        <div class="eyebrow">Open Challenges</div>
+        <h2>The Weekly Opens — <span class="v">no crew required.</span></h2>
+        <p>Three public challenges, hosted by the founder. Fifty athletes per board. Fresh competition every Monday.</p>
+      </div>
+      <div class="opens">
+        <div class="opencard">
+          <div class="openeyebrow">Daily steps &middot; 50-athlete field &middot; no watch needed</div>
+          <h3>The Steps - Open</h3>
+          <p>Stack verified steps, hit your daily target, and climb the board — no Apple Watch required.</p>
+          <div class="openmeta">Starts Monday, August 31</div>
+          <a class="btn" href="https://compete-track-win.com/c/BGQCRC">Join free</a>
+        </div>
+        <div class="opencard">
+          <div class="openeyebrow">Running &middot; 50-athlete field &middot; verified</div>
+          <h3>The Run - Open</h3>
+          <p>Log verified runs, earn points per mile, and see how your week stacks up against the field.</p>
+          <div class="openmeta">Starts Monday, August 31</div>
+          <a class="btn" href="https://compete-track-win.com/c/CUVJHF">Join free</a>
+        </div>
+        <div class="opencard">
+          <div class="openeyebrow">Walking &middot; 50-athlete field &middot; verified</div>
+          <h3>The Walk-Off - Open</h3>
+          <p>Turn every verified walk into points and see who owns the leaderboard by Sunday night.</p>
+          <div class="openmeta">Starts Monday, August 31</div>
+          <a class="btn" href="https://compete-track-win.com/c/MRK5YW">Join free</a>
+        </div>
+      </div>
+      <p class="opensnote">Joining is free — tap a board and you're in when it starts. Every Open is capped at 50 so the leaderboard stays competitive, readable, and worth following. The field closes when the round starts; a fresh board opens every Monday.</p>
     </div>
   </section>
 
