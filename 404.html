@@ -35,8 +35,8 @@
 <body>
   <div class="wrap" id="callout" style="display:none">
     <img class="mark" src="https://compete-track-win.com/mark_volt.png" alt="Compete. Track. Win.">
-    <h1>You've been challenged</h1>
-    <p>A friend challenged you on <b>Compete. Track. Win.</b> — verified workouts settle it. No wearable needed; even daily steps count.</p>
+    <h1 id="headline">You've been challenged</h1>
+    <p id="pitch">A friend challenged you on <b>Compete. Track. Win.</b> — verified workouts settle it. No wearable needed; even daily steps count.</p>
     <div class="code" id="code"></div>
     <a class="cta" id="cta" href="#">Get the app &amp; join</a>
     <p class="reassure">Free to join — no purchase needed &middot; Requires an iPhone</p>
@@ -56,6 +56,13 @@
       var seg = path.split("/").filter(Boolean);
       var code = (seg.length > 1 ? seg[seg.length - 1] : "").toUpperCase();
       if (!/^[A-Z0-9]{6}$/.test(code)) code = "";
+      // The site's Open Challenges cards link with ?src=open — a PUBLIC board, not a personal
+      // invite; the copy must not claim "a friend challenged you". App-shared links carry no
+      // param and keep the personal wording.
+      if (/[?&]src=open\b/.test(location.search)) {
+        document.getElementById("headline").textContent = "You're entering an Open";
+        document.getElementById("pitch").innerHTML = "This is one of <b>The Weekly Opens</b> on <b>Compete. Track. Win.</b> — a free public challenge anyone can join. Verified workouts settle it. No wearable needed; even daily steps count.";
+      }
       document.getElementById("code").textContent = code ? "CODE " + code : "";
       var cta = document.getElementById("cta");
       cta.href = APP_STORE_URL;
