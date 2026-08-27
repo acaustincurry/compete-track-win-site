@@ -77,7 +77,7 @@
     // visible code above is the guaranteed manual fallback.
     function stashInviteURL() {
       if (code && navigator.clipboard && navigator.clipboard.writeText) {
-        return navigator.clipboard.writeText(location.origin + "/c/" + code).catch(function () {});
+        return navigator.clipboard.writeText(location.origin + "/c/" + code + (/[?&]src=open\b/.test(location.search) ? "?src=open" : "")).catch(function () {});
       }
     }
     cta.addEventListener("click", stashInviteURL);

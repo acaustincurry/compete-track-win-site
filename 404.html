@@ -72,7 +72,7 @@
       // pattern and would be silently ignored, so it must be the URL.
       cta.addEventListener("click", function () {
         if (code && navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(location.origin + "/c/" + code).catch(function () {});
+          navigator.clipboard.writeText(location.origin + "/c/" + code + (/[?&]src=open\b/.test(location.search) ? "?src=open" : "")).catch(function () {});
         }
       });
       // Explicit copy affordance for anyone who wants to grab the code by hand — this one
