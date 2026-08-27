@@ -86,7 +86,12 @@
     if (!/^[A-Z0-9]{6}$/.test(code)) code = "";
     // The site's Open Challenges cards link with ?src=open — a PUBLIC board, not a personal
     // invite; the copy must not claim "a friend challenged you".
-    var isOpen = /[?&]src=open\b/.test(location.search);
+    // Codes of the CURRENT Weekly Opens — a public board must greet strangers as an Open
+    // even when the link arrives bare (shared from the app, typed, forwarded), not only
+    // via the site cards' ?src=open. ROTATES WEEKLY with the #open cards on index.html;
+    // the Monday automation will replace this list with the shared weeklyOpens data.
+    var OPEN_CODES = ["BGQCRC", "CUVJHF", "MRK5YW"];
+    var isOpen = /[?&]src=open\b/.test(location.search) || OPEN_CODES.indexOf(code) >= 0;
     if (isOpen) {
       document.getElementById("headline").textContent = "You're entering an Open";
       document.getElementById("pitch").innerHTML = "This is one of <b>The Weekly Opens</b> on <b>Compete. Track. Win.</b> — a free public challenge anyone can join. Verified workouts settle it. No wearable needed; even daily steps count.";
