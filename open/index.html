@@ -5,7 +5,7 @@
 <!-- Stable print/QR destination: flyers and shirts point here forever; the section's
      challenge codes rotate weekly underneath it. -->
 <meta http-equiv="refresh" content="0; url=/#open">
-<script>location.replace("/#open" + (location.search || ""));</script>
+<script>location.replace("/" + (location.search || "") + "#open");  // query BEFORE hash — a ?src param after #open would be part of the fragment</script>
 </head><body style="background:#16181C;color:#F4F6F7;font-family:-apple-system,sans-serif;text-align:center;padding:40px">
 <a href="/#open" style="color:#C6FF2E">Open Challenges — Compete. Track. Win.</a>
 </body></html>

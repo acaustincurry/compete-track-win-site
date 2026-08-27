@@ -7,8 +7,8 @@
   <!-- Open Graph / iMessage rich preview. GitHub Pages only serves this file for /c/ exactly;
        real /c/{CODE} links are served by 404.html — KEEP THE TWO PAGES IN SYNC. This page
        serves BOTH head-to-head Call Outs and group invites, so the wording stays general. -->
-  <meta property="og:title" content="You've been challenged">
-  <meta property="og:description" content="A friend challenged you on Compete. Track. Win. — verified workouts settle it, no wearable needed.">
+  <meta property="og:title" content="A challenge is waiting">
+  <meta property="og:description" content="Join it on Compete. Track. Win. — verified workouts settle it, no wearable needed.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://compete-track-win.com/og-callout.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -19,7 +19,7 @@
     html,body{margin:0;height:100%;background:var(--navy900);color:var(--text);
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
       -webkit-font-smoothing:antialiased;}
-    .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    .wrap{cursor:pointer;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
       text-align:center;padding:32px 24px;}
     .mark{width:88px;height:88px;margin-bottom:12px;}
     .series{color:var(--volt);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
@@ -88,7 +88,7 @@
     // real 6-char alphanumeric shape counts ("index.html" is not a code).
     var seg = location.pathname.split("/").filter(Boolean);
     var code = (seg.length > 1 ? seg[seg.length - 1] : "").toUpperCase();
-    if (!/^[A-Z0-9]{6}$/.test(code)) code = "";
+    if (!/^[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{6}$/.test(code)) code = "";  // app charset: no 0,O,1,I,L
     // The CURRENT Weekly Opens, keyed by code — each greets with its own name and an
     // activity-accurate pitch (never "steps count" on a running board). A public board
     // must greet as an Open even when the link arrives bare (app share, typed, forwarded),
@@ -96,8 +96,8 @@
     // index.html; the Monday automation will replace this map with the shared weeklyOpens data.
     var OPENS = {
       "BGQCRC": { name: "The Steps - Open", pitch: "A free public <b>steps</b> challenge on <b>Compete. Track. Win.</b> — hit your daily step tiers and climb the live board. No Apple Watch needed; your iPhone counts your steps. Fresh round every Monday." },
-      "CUVJHF": { name: "The Run - Open", pitch: "A free public <b>running</b> challenge on <b>Compete. Track. Win.</b> — every verified run scores points per mile on a live leaderboard. Fresh round every Monday." },
-      "MRK5YW": { name: "The Walk-Off - Open", pitch: "A free public <b>walking</b> challenge on <b>Compete. Track. Win.</b> — every verified walk scores points per mile. Own the board by Sunday night. Fresh round every Monday." }
+      "CUVJHF": { name: "The Run - Open", pitch: "A free public <b>running</b> challenge on <b>Compete. Track. Win.</b> — verified runs score a point per mile on a live leaderboard. Fresh round every Monday." },
+      "MRK5YW": { name: "The Walk-Off - Open", pitch: "A free public <b>walking</b> challenge on <b>Compete. Track. Win.</b> — verified walks score a point per mile. Own the board by Sunday night. Fresh round every Monday." }
     };
     var openInfo = OPENS[code] || null;
     var isOpen = /[?&]src=open\b/.test(location.search) || !!openInfo;
@@ -122,7 +122,7 @@
         navigator.clipboard.writeText(stashURL).catch(function () {});
       }
     }
-    document.addEventListener("click", function (e) {
+    if (/iPhone/.test(navigator.userAgent)) document.addEventListener("click", function (e) {
       if (e.target && e.target.closest && e.target.closest("#copy")) return;
       stashInviteURL();
     });
