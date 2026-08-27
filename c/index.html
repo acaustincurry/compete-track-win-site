@@ -4,36 +4,46 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>You've been challenged — Compete. Track. Win.</title>
-
-  <!-- Open Graph / iMessage rich preview. For a per-invite preview ("Alex called you out"),
-       a server/redirect worker would need to inject og:title/og:description from the {code};
-       GitHub Pages is static, so the copy below is the shared default for every invite.
-       This page now serves BOTH head-to-head Call Outs and group invites, so the wording
-       stays general — don't narrow it back to "called out". -->
+  <!-- Open Graph / iMessage rich preview. GitHub Pages only serves this file for /c/ exactly;
+       real /c/{CODE} links are served by 404.html — KEEP THE TWO PAGES IN SYNC. This page
+       serves BOTH head-to-head Call Outs and group invites, so the wording stays general. -->
   <meta property="og:title" content="You've been challenged">
   <meta property="og:description" content="A friend challenged you on Compete. Track. Win. — verified workouts settle it, no wearable needed.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://compete-track-win.com/og-callout.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="apple-itunes-app" content="app-id=6759311183">
-
+  <!-- No Smart App Banner here (board 2026-08-27): a banner install skips the CTA tap, so the
+       invite is never stashed — the CTA is the only install path that carries the invite. -->
   <style>
     :root { --navy900:#16181C; --navy700:#1E2128; --volt:#C6FF2E; --mist:#8A9099; --text:#F4F6F7; }
     html,body{margin:0;height:100%;background:var(--navy900);color:var(--text);
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;}
     .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
-      text-align:center;padding:32px;gap:18px;}
-    .mark{width:96px;height:96px;}
-    h1{font-size:26px;margin:0;text-wrap:balance;}
+      text-align:center;padding:32px 24px;}
+    .mark{width:88px;height:88px;margin-bottom:12px;}
+    h1{font-size:28px;font-weight:800;letter-spacing:-0.5px;margin:0 0 10px;text-wrap:balance;}
     p{color:var(--mist);max-width:340px;line-height:1.5;margin:0;text-wrap:pretty;}
-    .code{font-family:ui-monospace,monospace;letter-spacing:4px;font-size:20px;color:var(--volt);}
-    a.cta{margin-top:8px;background:var(--volt);color:var(--navy900);font-weight:700;text-decoration:none;
-      padding:15px 28px;border-radius:14px;font-size:17px;}
-    button.copy{background:transparent;border:1px solid var(--navy700);color:var(--text);
-      padding:12px 20px;border-radius:12px;font-size:15px;min-height:44px;cursor:pointer;}
+    a.cta{margin:28px 0 8px;background:var(--volt);color:var(--navy900);font-weight:700;text-decoration:none;
+      padding:16px 30px;border-radius:14px;font-size:17px;}
+    .promise{color:var(--text);font-size:15px;margin-top:12px;max-width:340px;}
+    .caption{color:var(--mist);font-size:13px;margin-top:8px;}
+    .steps{margin:30px 0 0;padding:0;list-style:none;max-width:320px;text-align:left;}
+    .stepshead{color:var(--mist);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+      text-align:center;margin-bottom:12px;}
+    .steps li{display:flex;gap:12px;align-items:flex-start;margin:10px 0;color:var(--mist);font-size:14.5px;line-height:1.45;}
+    .steps li b{color:var(--text);font-weight:600;}
+    .n{flex:none;font-family:ui-monospace,monospace;color:var(--volt);font-size:14px;font-weight:600;
+      border:1px solid var(--navy700);border-radius:8px;width:26px;height:26px;display:flex;
+      align-items:center;justify-content:center;margin-top:1px;}
+    .joinbar{display:block;margin:8px 0 0;}
+    .codeline{margin-top:28px;color:var(--mist);font-size:13.5px;}
+    .codeval{font-family:ui-monospace,monospace;letter-spacing:2px;font-size:16px;color:var(--text);margin:6px 0 0;
+      display:flex;align-items:center;justify-content:center;gap:10px;}
+    button.copy{background:transparent;border:1px solid var(--navy700);color:var(--mist);
+      padding:10px 14px;border-radius:10px;font-size:13px;min-height:40px;min-width:74px;cursor:pointer;}
     button.copy:active{background:var(--navy700);}
-    .reassure{font-size:15px;color:var(--text);}
-    .fine{font-size:12px;color:var(--mist);}
+    .fine{font-size:12px;color:var(--mist);margin-top:10px;max-width:340px;}
   </style>
 </head>
 <body>
@@ -41,58 +51,76 @@
     <img class="mark" src="https://compete-track-win.com/mark_volt.png" alt="Compete. Track. Win.">
     <h1 id="headline">You've been challenged</h1>
     <p id="pitch">A friend challenged you on <b>Compete. Track. Win.</b> — verified workouts settle it. No wearable needed; even daily steps count.</p>
-    <div class="code" id="code"></div>
-    <a class="cta" id="cta" href="#">Get the app &amp; join</a>
-    <p class="reassure">Free to join — no purchase needed &middot; Requires an iPhone</p>
-    <button class="copy" id="copy" hidden>Copy code</button>
-    <p class="fine">Already have the app? It should open automatically. New here? Install, open the app, and your invite is ready — enter the code above if it doesn't fill in. Workouts verify through Apple Health.</p>
-  </div>
 
+    <a class="cta" id="cta" href="#">Get the app &amp; join</a>
+    <p class="promise">Tap the button and your invite comes with you — just hit Join in the app.</p>
+    <p class="caption">Free on the App Store &middot; No purchase needed &middot; iPhone only</p>
+
+    <ol class="steps">
+      <div class="stepshead">Here's how this goes</div>
+      <li><span class="n">1</span><span><b>Get the app</b> — free on the App Store.</span></li>
+      <li><span class="n">2</span><span><b>Sign in with Apple or Google</b> — about a minute.</span></li>
+      <li><span class="n">3</span><span><b>Tap Join at the top of Home</b> — your invite's ready to accept.
+        <svg class="joinbar" viewBox="0 0 240 44" width="210" height="39" aria-hidden="true">
+          <rect x="1" y="1" width="238" height="42" rx="11" fill="#1E2128" stroke="#2A2E36"/>
+          <rect x="14" y="16" width="70" height="5" rx="2.5" fill="#3A404A"/>
+          <rect x="14" y="26" width="44" height="4" rx="2" fill="#2A2E36"/>
+          <circle cx="206" cy="22" r="15" fill="none" stroke="#C6FF2E" stroke-width="2.5"/>
+          <circle cx="203" cy="18.5" r="3.6" fill="#8A9099"/>
+          <path d="M196 29c0-4 3.2-6.4 7-6.4s7 2.4 7 6.4" fill="none" stroke="#8A9099" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M213.5 15h6M216.5 12v6" stroke="#C6FF2E" stroke-width="2.2" stroke-linecap="round"/>
+        </svg></span></li>
+    </ol>
+
+    <div class="codeline" id="codewrap" hidden>If the app asks for a code:
+      <div class="codeval"><span id="code"></span><button class="copy" id="copy">Copy</button></div>
+    </div>
+    <p class="fine">Already have the app? Invite links open it automatically. Workouts verify through Apple Health.</p>
+  </div>
   <script>
     // The invite code is the segment AFTER "c" (/c/{CODE}) — "/c/" exactly (this page's only
-    // directly-served path) has no code and must not render "CODE C" — and only the app's real
-    // 6-char alphanumeric shape counts ("index.html" is not a code).
+    // directly-served path) has no code and must not render a bogus one — and only the app's
+    // real 6-char alphanumeric shape counts ("index.html" is not a code).
     var seg = location.pathname.split("/").filter(Boolean);
     var code = (seg.length > 1 ? seg[seg.length - 1] : "").toUpperCase();
     if (!/^[A-Z0-9]{6}$/.test(code)) code = "";
     // The site's Open Challenges cards link with ?src=open — a PUBLIC board, not a personal
-    // invite; the copy must not claim "a friend challenged you". App-shared links carry no
-    // param and keep the personal wording.
-    if (/[?&]src=open\b/.test(location.search)) {
+    // invite; the copy must not claim "a friend challenged you".
+    var isOpen = /[?&]src=open\b/.test(location.search);
+    if (isOpen) {
       document.getElementById("headline").textContent = "You're entering an Open";
       document.getElementById("pitch").innerHTML = "This is one of <b>The Weekly Opens</b> on <b>Compete. Track. Win.</b> — a free public challenge anyone can join. Verified workouts settle it. No wearable needed; even daily steps count.";
     }
-    document.getElementById("code").textContent = code ? "CODE " + code : "";
-
     var APP_STORE_URL = "https://apps.apple.com/app/id6759311183";
     var cta = document.getElementById("cta");
     cta.href = APP_STORE_URL;
-
-    // Deferred-deep-link bridge for COLD installs: Universal Links don't survive an App Store
-    // install, so on the tap that sends the visitor to the App Store we stash the invite on the
-    // clipboard. On first launch the app probes the clipboard with UIPasteboard.detectPatterns
-    // (.probableWebURL) so it never trips the iOS paste banner — which means the stash MUST be
-    // the FULL /c/{CODE} URL: a bare code matches no Apple detection pattern and the app will
-    // silently find nothing. Best-effort (needs the user gesture + clipboard permission); the
-    // visible code above is the guaranteed manual fallback.
+    // Deferred-deep-link bridge for COLD installs: on a tap, stash the FULL /c/{CODE} URL
+    // (keeping ?src=open for attribution). The app probes with UIPasteboard.detectPatterns
+    // (.probableWebURL) — a bare code matches no detection pattern, so it must be the URL.
+    // Any tap on the page primes the bridge (not just the CTA) — EXCEPT after the user
+    // explicitly copies the bare code, which must then survive on the clipboard.
+    var stashURL = location.origin + "/c/" + code + (isOpen ? "?src=open" : "");
+    var userCopiedBareCode = false;
     function stashInviteURL() {
-      if (code && navigator.clipboard && navigator.clipboard.writeText) {
-        return navigator.clipboard.writeText(location.origin + "/c/" + code + (/[?&]src=open\b/.test(location.search) ? "?src=open" : "")).catch(function () {});
+      if (code && !userCopiedBareCode && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(stashURL).catch(function () {});
       }
     }
-    cta.addEventListener("click", stashInviteURL);
-
-    // Explicit copy affordance for anyone who wants to grab the code by hand — this one copies
-    // the BARE code (it's for typing into the app's join field, not for the URL bridge).
+    document.addEventListener("click", function (e) {
+      if (e.target && e.target.closest && e.target.closest("#copy")) return;
+      stashInviteURL();
+    });
     if (code) {
+      document.getElementById("code").textContent = code;
+      document.getElementById("codewrap").hidden = false;
       var copyBtn = document.getElementById("copy");
-      copyBtn.hidden = false;
       copyBtn.addEventListener("click", function () {
+        userCopiedBareCode = true;   // explicit intent: keep the bare code on the clipboard
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(code).catch(function () {});
         }
         copyBtn.textContent = "Copied";
-        setTimeout(function () { copyBtn.textContent = "Copy code"; }, 1500);
+        setTimeout(function () { copyBtn.textContent = "Copy"; }, 1500);
       });
     }
     // If the app is already installed, the Universal Link opens it directly and this page
