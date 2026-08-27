@@ -259,22 +259,22 @@
           <div class="openeyebrow">Daily steps &middot; 50-athlete field &middot; no watch needed</div>
           <h3>The Steps - Open</h3>
           <p>Stack verified steps, hit your daily target, and climb the board — no Apple Watch required.</p>
-          <div class="openmeta">Starts Monday, August 31</div>
-          <a class="btn" href="https://compete-track-win.com/c/BGQCRC?src=open">Join free</a>
+          <div class="openmeta" data-open-meta>Starts Monday, August 31</div>
+          <a class="btn" data-open-link="steps" href="https://compete-track-win.com/c/BGQCRC?src=open">Join free</a>
         </div>
         <div class="opencard">
           <div class="openeyebrow">Running &middot; 50-athlete field &middot; verified</div>
           <h3>The Run - Open</h3>
           <p>Log verified runs, earn points per mile, and see how your week stacks up against the field.</p>
-          <div class="openmeta">Starts Monday, August 31</div>
-          <a class="btn" href="https://compete-track-win.com/c/CUVJHF?src=open">Join free</a>
+          <div class="openmeta" data-open-meta>Starts Monday, August 31</div>
+          <a class="btn" data-open-link="run" href="https://compete-track-win.com/c/CUVJHF?src=open">Join free</a>
         </div>
         <div class="opencard">
           <div class="openeyebrow">Walking &middot; 50-athlete field &middot; verified</div>
           <h3>The Walk-Off - Open</h3>
           <p>Turn every verified walk into points and see who owns the leaderboard by Sunday night.</p>
-          <div class="openmeta">Starts Monday, August 31</div>
-          <a class="btn" href="https://compete-track-win.com/c/MRK5YW?src=open">Join free</a>
+          <div class="openmeta" data-open-meta>Starts Monday, August 31</div>
+          <a class="btn" data-open-link="walk" href="https://compete-track-win.com/c/MRK5YW?src=open">Join free</a>
         </div>
       </div>
       <p class="opensnote">Joining is free — tap a board and you're in when it starts. Every Open is capped at 50 so the leaderboard stays competitive, readable, and worth following. The field closes when the round starts; a fresh board opens every Monday.</p>
@@ -410,6 +410,29 @@
   </section>
 
 </main>
+<script>
+  // Weekly Opens live rotation (2026-08-28): the server publishes the current joinable boards to
+  // one public Firestore doc every Sunday night. This swaps the card codes + start date so the
+  // page never points at a locked round. The hardcoded cards are the fallback.
+  fetch("https://firestore.googleapis.com/v1/projects/game-on-67f07/databases/(default)/documents/public/weeklyOpens")
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (doc) {
+      if (!doc || !doc.fields) return;
+      var f = doc.fields;
+      var label = f.startsLabel && f.startsLabel.stringValue;
+      var vals = f.boards && f.boards.arrayValue && f.boards.arrayValue.values;
+      if (!vals) return;
+      vals.forEach(function (v) {
+        var b = v.mapValue && v.mapValue.fields; if (!b) return;
+        var key = b.key && b.key.stringValue, code = b.code && b.code.stringValue;
+        if (!key || !/^[A-Z0-9]{6}$/.test(code || "")) return;
+        var a = document.querySelector('[data-open-link="' + key + '"]');
+        if (a) a.href = "https://compete-track-win.com/c/" + code + "?src=open";
+      });
+      if (label) document.querySelectorAll("[data-open-meta]").forEach(function (m) { m.textContent = label; });
+    })
+    .catch(function () {});
+</script>
 
 <footer>
   <div class="wrap foot">

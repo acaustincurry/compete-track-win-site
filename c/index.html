@@ -107,6 +107,34 @@
       document.getElementById("pitch").innerHTML = openInfo ? openInfo.pitch
         : "This is one of <b>The Weekly Opens</b> on <b>Compete. Track. Win.</b> — a free public challenge anyone can join. Verified workouts settle it.";
     }
+    
+    // Live rotation (2026-08-28): future weeks' Open codes come from the same public doc the
+    // homepage cards read. The static OPENS map renders instantly; this upgrade only matters
+    // when the visitor's code is newer than the last site deploy.
+    var OPEN_PITCHES = {
+      "steps": "A free public <b>steps</b> challenge on <b>Compete. Track. Win.</b> — hit your daily step tiers and climb the live board. No Apple Watch needed; your iPhone counts your steps. Fresh round every Monday.",
+      "run": "A free public <b>running</b> challenge on <b>Compete. Track. Win.</b> — verified runs score a point per mile on a live leaderboard. Fresh round every Monday.",
+      "walk": "A free public <b>walking</b> challenge on <b>Compete. Track. Win.</b> — verified walks score a point per mile. Own the board by Sunday night. Fresh round every Monday."
+    };
+    if (code && !openInfo) {
+      fetch("https://firestore.googleapis.com/v1/projects/game-on-67f07/databases/(default)/documents/public/weeklyOpens")
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (doc) {
+          var vals = doc && doc.fields && doc.fields.boards && doc.fields.boards.arrayValue && doc.fields.boards.arrayValue.values;
+          if (!vals) return;
+          vals.forEach(function (v) {
+            var b = v.mapValue && v.mapValue.fields; if (!b) return;
+            if (b.code && b.code.stringValue === code && b.key && OPEN_PITCHES[b.key.stringValue]) {
+              isOpen = true;
+              stashURL = location.origin + "/c/" + code + "?src=open";
+              document.getElementById("series").hidden = false;
+              document.getElementById("headline").textContent = b.name ? b.name.stringValue : "You're entering an Open";
+              document.getElementById("pitch").innerHTML = OPEN_PITCHES[b.key.stringValue];
+            }
+          });
+        }).catch(function () {});
+    }
+
     var APP_STORE_URL = "https://apps.apple.com/app/id6759311183";
     var cta = document.getElementById("cta");
     cta.href = APP_STORE_URL;
