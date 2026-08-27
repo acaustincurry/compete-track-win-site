@@ -22,6 +22,7 @@
     .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
       text-align:center;padding:32px 24px;}
     .mark{width:88px;height:88px;margin-bottom:12px;}
+    .series{color:var(--volt);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
     h1{font-size:28px;font-weight:800;letter-spacing:-0.5px;margin:0 0 10px;text-wrap:balance;}
     p{color:var(--mist);max-width:340px;line-height:1.5;margin:0;text-wrap:pretty;}
     a.cta{margin:28px 0 8px;background:var(--volt);color:var(--navy900);font-weight:700;text-decoration:none;
@@ -37,18 +38,21 @@
       border:1px solid var(--navy700);border-radius:8px;width:26px;height:26px;display:flex;
       align-items:center;justify-content:center;margin-top:1px;}
     .joinbar{display:block;margin:8px 0 0;}
-    .codeline{margin-top:28px;color:var(--mist);font-size:13.5px;}
-    .codeval{font-family:ui-monospace,monospace;letter-spacing:2px;font-size:16px;color:var(--text);margin:6px 0 0;
-      display:flex;align-items:center;justify-content:center;gap:10px;}
-    button.copy{background:transparent;border:1px solid var(--navy700);color:var(--mist);
-      padding:10px 14px;border-radius:10px;font-size:13px;min-height:40px;min-width:74px;cursor:pointer;}
-    button.copy:active{background:var(--navy700);}
+    .codecard{margin-top:28px;background:var(--navy700);border:1px solid #2A2E36;border-radius:14px;
+      padding:14px 20px;}
+    .codelabel{color:var(--mist);font-size:13px;}
+    .codeval{font-family:ui-monospace,monospace;letter-spacing:3px;font-size:19px;color:var(--text);margin:8px 0 0;
+      display:flex;align-items:center;justify-content:center;gap:12px;}
+    button.copy{background:transparent;border:1.5px solid var(--volt);color:var(--volt);font-weight:600;
+      padding:10px 16px;border-radius:10px;font-size:13.5px;min-height:40px;min-width:84px;cursor:pointer;}
+    button.copy:active{background:rgba(198,255,46,.12);}
     .fine{font-size:12px;color:var(--mist);margin-top:10px;max-width:340px;}
   </style>
 </head>
 <body>
   <div class="wrap" id="callout" style="display:none">
     <img class="mark" src="https://compete-track-win.com/mark_volt.png" alt="Compete. Track. Win.">
+    <div class="series" id="series" hidden>The Weekly Opens</div>
     <h1 id="headline">You've been challenged</h1>
     <p id="pitch">A friend challenged you on <b>Compete. Track. Win.</b> — verified workouts settle it. No wearable needed; even daily steps count.</p>
 
@@ -72,7 +76,8 @@
         </svg></span></li>
     </ol>
 
-    <div class="codeline" id="codewrap" hidden>If the app asks for a code:
+    <div class="codecard" id="codewrap" hidden>
+      <div class="codelabel">If the app asks for a code:</div>
       <div class="codeval"><span id="code"></span><button class="copy" id="copy">Copy</button></div>
     </div>
     <p class="fine">Already have the app? Invite links open it automatically. Workouts verify through Apple Health.</p>
@@ -90,18 +95,23 @@
       var seg = path.split("/").filter(Boolean);
       var code = (seg.length > 1 ? seg[seg.length - 1] : "").toUpperCase();
       if (!/^[A-Z0-9]{6}$/.test(code)) code = "";
-      // The site's Open Challenges cards link with ?src=open — a PUBLIC board, not a personal
-      // invite; the copy must not claim "a friend challenged you". App-shared links carry no
-      // param and keep the personal wording.
-      // Codes of the CURRENT Weekly Opens — a public board must greet strangers as an Open
-      // even when the link arrives bare (shared from the app, typed, forwarded), not only
-      // via the site cards' ?src=open. ROTATES WEEKLY with the #open cards on index.html;
-      // the Monday automation will replace this list with the shared weeklyOpens data.
-      var OPEN_CODES = ["BGQCRC", "CUVJHF", "MRK5YW"];
-      var isOpen = /[?&]src=open\b/.test(location.search) || OPEN_CODES.indexOf(code) >= 0;
+      // The CURRENT Weekly Opens, keyed by code — each greets with its own name and an
+      // activity-accurate pitch (never "steps count" on a running board). A public board
+      // must greet as an Open even when the link arrives bare (app share, typed, forwarded),
+      // not only via the site cards' ?src=open. ROTATES WEEKLY with the #open cards on
+      // index.html; the Monday automation will replace this map with the shared weeklyOpens data.
+      var OPENS = {
+        "BGQCRC": { name: "The Steps - Open", pitch: "A free public <b>steps</b> challenge on <b>Compete. Track. Win.</b> — hit your daily step tiers and climb the live board. No Apple Watch needed; your iPhone counts your steps. Fresh round every Monday." },
+        "CUVJHF": { name: "The Run - Open", pitch: "A free public <b>running</b> challenge on <b>Compete. Track. Win.</b> — every verified run scores points per mile on a live leaderboard. Fresh round every Monday." },
+        "MRK5YW": { name: "The Walk-Off - Open", pitch: "A free public <b>walking</b> challenge on <b>Compete. Track. Win.</b> — every verified walk scores points per mile. Own the board by Sunday night. Fresh round every Monday." }
+      };
+      var openInfo = OPENS[code] || null;
+      var isOpen = /[?&]src=open\b/.test(location.search) || !!openInfo;
       if (isOpen) {
-        document.getElementById("headline").textContent = "You're entering an Open";
-        document.getElementById("pitch").innerHTML = "This is one of <b>The Weekly Opens</b> on <b>Compete. Track. Win.</b> — a free public challenge anyone can join. Verified workouts settle it. No wearable needed; even daily steps count.";
+        document.getElementById("series").hidden = false;
+        document.getElementById("headline").textContent = openInfo ? openInfo.name : "You're entering an Open";
+        document.getElementById("pitch").innerHTML = openInfo ? openInfo.pitch
+          : "This is one of <b>The Weekly Opens</b> on <b>Compete. Track. Win.</b> — a free public challenge anyone can join. Verified workouts settle it.";
       }
       var cta = document.getElementById("cta");
       cta.href = APP_STORE_URL;
